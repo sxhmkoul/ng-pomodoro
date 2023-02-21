@@ -1,0 +1,7 @@
+<div *ngIf="!expired" class="container-fluid h-full position-relative p-0 m-0">
+    <div class="position-absolute clock-body w-100 p-0 m-0">
+        <h3>Pomodoro clock</h3>
+        <app-timer [time]=1 (isExpired)="checkExpiry($event)"></app-timer>
+    </div>
+</div>
+<app-break-interval *ngIf="expired"></app-break-interval>
