@@ -11,32 +11,11 @@ export class TimerComponent {
   @Output() isExpired = new EventEmitter<boolean>() ;
   workTimerStarted: boolean = false;
   zeroPlaceholder: string = '00';
-  workInterval: number = this.time;//25;
+  workInterval: number = this.time;
   seconds: number = 60;
-  minute: number = this.time;//25;
+  minute: number = this.time;
   onScreenSeconds: any = 59;
-  workTimerSeconds$ = new Observable(observer => {
-    setInterval(()=>{
-      this.seconds--;
-      this.workTimerStarted = true;
-      if(this.seconds < 10 && this.seconds > 0){
-        observer.next('0'+this.seconds);
-      } else observer.next(this.seconds);
-  
-      if(this.seconds == 0){
-        this.workTimerStarted = false;
-        this.seconds = 60;
-        if(this.time > 0)
-          this.workTimerMinute$.next(this.time - 1);
-        else {
-          this.resetTimer();
-          this.initBreakInterval();
-          observer.complete();
-        }
-      }
-  
-    },1000);
-  });
+  workTimerSeconds$ !: Observable<any>;
   
   workTimerMinute$ = new Subject<number>();
   
@@ -50,11 +29,34 @@ export class TimerComponent {
   
   startWorkTimer = () => {
     this.workTimerStarted = true;
-    this.workTimerMinute$.next(this.time - 1)
-    this.workTimerSeconds$.subscribe((sec)=>{
-      this.onScreenSeconds = sec;
-      console.log(sec);
-    })
+    this.workTimerSeconds$ = new Observable(observer => {
+      setInterval(()=>{
+        this.seconds--;
+        this.workTimerStarted = true;
+        if(this.seconds < 10 && this.seconds > 0){
+          observer.next('0'+this.seconds);
+        } else observer.next(this.seconds);
+    
+        if(this.seconds == 0){
+          this.workTimerStarted = false;
+          this.seconds = 60;
+          if(this.time > 0)
+            this.workTimerMinute$.next(this.time - 1);
+          else {
+            this.resetTimer();
+            observer.complete();
+            this.initBreakInterval();
+          }
+        }
+    
+      },1000);
+    });
+    
+    this.workTimerMinute$.next(this.time - 1);
+    // this.workTimerSeconds$.subscribe((sec)=>{
+    //   this.onScreenSeconds = sec;
+    //   console.log(sec);
+    // })
     
   }
   
