@@ -1,5 +1,7 @@
+import { state } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { Observable, Subject, timer } from 'rxjs';
+import { StateManagementService } from 'src/app/services/state-management.service';
 
 @Component({
   selector: 'app-work-interval',
@@ -14,46 +16,46 @@ workInterval: number = 2//25;
 seconds: number = 60;
 minute: number = 2//25;
 onScreenSeconds: any = 59;
-workTimerSeconds$ = new Observable(observer => {
-  setInterval(()=>{
-    this.seconds--;
-    this.workTimerStarted = true;
-    if(this.seconds < 10 && this.seconds > 0){
-      observer.next('0'+this.seconds);
-    } else observer.next(this.seconds);
+// workTimerSeconds$ = new Observable(observer => {
+//   setInterval(()=>{
+//     this.seconds--;
+//     this.workTimerStarted = true;
+//     if(this.seconds < 10 && this.seconds > 0){
+//       observer.next('0'+this.seconds);
+//     } else observer.next(this.seconds);
 
-    if(this.seconds == 0){
-      this.workTimerStarted = false;
-      this.seconds = 60;
-      if(this.workInterval > 0)
-        this.workTimerMinute$.next(this.workInterval - 1);
-      else {
-        this.resetTimer();
-        this.initBreakInterval();
-        observer.complete();
-      }
-    }
+//     if(this.seconds == 0){
+//       this.workTimerStarted = false;
+//       this.seconds = 60;
+//       if(this.workInterval > 0)
+//         this.workTimerMinute$.next(this.workInterval - 1);
+//       else {
+//         this.resetTimer();
+//         this.initBreakInterval();
+//         observer.complete();
+//       }
+//     }
 
-  },1000);
-});
+//   },1000);
+// });
 
-workTimerMinute$ = new Subject<number>();
+// workTimerMinute$ = new Subject<number>();
 
-constructor(){ }
+constructor(private state: StateManagementService){ }
 
 ngOnInit(): void {
-  this.workTimerMinute$.subscribe((mins)=>{
-    this.workInterval = mins;
-  })
+  // this.workTimerMinute$.subscribe((mins)=>{
+  //   this.workInterval = mins;
+  // })
 }
 
 startWorkTimer = () => {
-  this.workTimerStarted = true;
-  this.workTimerMinute$.next(this.workInterval - 1)
-  this.workTimerSeconds$.subscribe((sec)=>{
-    this.onScreenSeconds = sec;
-    console.log(sec);
-  })
+  // this.workTimerStarted = true;
+  // this.workTimerMinute$.next(this.workInterval - 1)
+  // this.workTimerSeconds$.subscribe((sec)=>{
+  //   this.onScreenSeconds = sec;
+  //   console.log(sec);
+  // })
   
 }
 
@@ -72,6 +74,7 @@ initBreakInterval = () => {
 
 checkExpiry = ($flag: boolean) => {
   this.expired = $flag;
+  this.state.workModeDisabled = !this.state.workModeDisabled;
   // console.log($flag);
 }
 

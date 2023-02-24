@@ -1,4 +1,4 @@
 <div></div>
 <div>
-    <app-timer [time]=1></app-timer>
+    <app-timer [time]=1 message="Stop and catch a breath." (isExpired)="checkExpiry($event)"></app-timer>
 </div>

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { StateManagementService } from './services/state-management.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'pomodoro';
+  // workState: boolean = true;
+
+  constructor(public state: StateManagementService){}
+
+
+
+
+
+
 }

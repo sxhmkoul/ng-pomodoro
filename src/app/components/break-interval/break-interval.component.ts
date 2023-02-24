@@ -6,5 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./break-interval.component.scss']
 })
 export class BreakIntervalComponent {
+  expired: boolean = false;
+  
+  constructor(){}
 
+  checkExpiry = ($flag: boolean) => {
+    this.expired = $flag;
+    // console.log($flag);
+  }
 }

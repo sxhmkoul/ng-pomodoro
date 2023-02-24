@@ -1,10 +1,10 @@
 <div class="d-flex justify-content-center flex-column">
-    <div>Focus on your work.</div>
-    <h3>testing {{workTimerMinute$ | async}} {{workTimerSeconds$ | async}}</h3>
+    <div>{{message}}</div>
+    <!-- <h3>testing {{workTimerMinute$ | async}} {{workTimerSeconds$ | async}}</h3> -->
     <h1>{{time}}:<span *ngIf="workTimerStarted">{{onScreenSeconds}}</span><span *ngIf="!workTimerStarted">{{zeroPlaceholder}}</span></h1>
     <div class="w-100 d-flex border justify-content-center">
         <div class="w-25 d-flex justify-content-evenly">
-            <button class="btn btn-success buttons" (click)="startWorkTimer()">Start</button>
+            <button #start class="btn btn-success buttons" (click)="startWorkTimer()">Start</button>
             <button class="btn btn-secondary ml-3 buttons" (click)="pauseTimer()">Pause</button>
         </div>
     </div>

@@ -1,13 +1,19 @@
 .h-full{
     height: 100vh;
-    border: 2px solid red;
+    background: url('https://cdn.pixabay.com/photo/2018/11/11/09/30/nature-3808354_960_720.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .clock-body{
-    border: 2px dashed green;
-    top: 10%;
+    top: 25%;
     margin: auto;
     text-align: center;
+
+    .clock-core{
+        border-radius: 50px;
+        padding: 5em 0;
+    }
 }
 
 .buttons{
