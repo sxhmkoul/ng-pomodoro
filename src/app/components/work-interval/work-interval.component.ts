@@ -41,7 +41,7 @@ onScreenSeconds: any = 59;
 
 // workTimerMinute$ = new Subject<number>();
 
-constructor(private state: StateManagementService){ }
+constructor(state: StateManagementService){ }
 
 ngOnInit(): void {
   // this.workTimerMinute$.subscribe((mins)=>{
@@ -74,7 +74,7 @@ initBreakInterval = () => {
 
 checkExpiry = ($flag: boolean) => {
   this.expired = $flag;
-  this.state.workModeDisabled = !this.state.workModeDisabled;
+  
   // console.log($flag);
 }
 

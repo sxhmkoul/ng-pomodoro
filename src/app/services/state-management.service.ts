@@ -1,11 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class StateManagementService {
+export class StateManagementService implements OnInit{
 
-  constructor() { }
+  workModeDisabled = new Subject<boolean>();
+  status: boolean = false;
+  dirtyPage: boolean = false;
 
-  workModeDisabled: boolean = false;
+  constructor() { 
+    this.workModeDisabled.subscribe((val)=>{
+      this.status = val;
+      console.log('subd', val);
+    })
+    console.log('inited service');
+  }
+
+  ngOnInit(): void {
+      
+  }
+
+  
 }

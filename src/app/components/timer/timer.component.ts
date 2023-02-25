@@ -15,36 +15,45 @@ export class TimerComponent implements OnDestroy, AfterViewInit{
   flagSwitch: boolean = false;
   subscriptions = new Subscription();
   secondsSub !: Subscription;
+  pauseShellSec : number = 0;
+  pauseShellMin : number = 0;
+  // pageDirty: boolean = false;
+  isPaused: boolean = false;
   minuteSub !: Subscription;
   stopTimer : boolean = false;
   workTimerSecondsSubscriber !: any;
+  id:any;
   workTimerStarted: boolean = false;
   x : any;
   zeroPlaceholder: string = '00';
   workInterval: number = this.time;
-  seconds: number = 60;
+  seconds: number = 59;
   minute: number = this.time;
   onScreenSeconds: any = 59;
   workTimerSeconds$ !: Observable<any>;
   
   workTimerMinute$ = new Subject<number>();
   
-  constructor(private state: StateManagementService){ }
+  constructor(public state: StateManagementService){ }
   
   ngOnInit(): void {
+    console.log(this.state.status);
+    if(this.state.dirtyPage){
+      this.startWorkTimer();
+    }
     this.minuteSub = (this.workTimerMinute$.subscribe((mins)=>{
       this.time = mins;
     }));
   }
 
   ngAfterViewInit(): void {
-    this.autoStart();
+    // this.autoStart();
   }
   
   startWorkTimer = () => {
     this.workTimerStarted = true;
     this.workTimerSeconds$ = new Observable(observer => {
-      let id = setInterval(()=>{
+      this.id = setInterval(()=>{
           this.seconds--;
         this.workTimerStarted = true;
         if(this.seconds < 10 && this.seconds > 0){
@@ -58,7 +67,7 @@ export class TimerComponent implements OnDestroy, AfterViewInit{
             this.workTimerMinute$.next(this.time - 1);
           }
           else {
-            clearInterval(id);
+            clearInterval(this.id);
             this.resetTimer();
             observer.complete();
             this.initBreakInterval();
@@ -81,21 +90,32 @@ export class TimerComponent implements OnDestroy, AfterViewInit{
     this.time = this.minute;
 
   }
+
+  resumeWorkTimer = () => {
+    this.secondsSub = (this.workTimerSeconds$.subscribe((sec)=>{
+      this.onScreenSeconds = sec;
+      console.log(sec);
+    }))
+  }
   
   pauseTimer = () => {
-    
+    this.isPaused = true;
+    this.pauseShellMin = this.time;
+    this.pauseShellSec = this.seconds;
+    clearInterval(this.id);
   }
 
-  autoStart(){
-    this.startBtn.nativeElement.click();
-  }
+ dirty(){
+  this.state.dirtyPage = true;
+ }
   
   initBreakInterval = () => {
     // this.flagSwitch = !this.flagSwitch;
-    this.state.workModeDisabled = !this.state.workModeDisabled; 
-    this.isExpired.emit(this.state.workModeDisabled);
+    // this.state.workModeDisabled = !this.state.workModeDisabled;
+     this.state.workModeDisabled.next(!this.state.status);
+    this.isExpired.emit(this.state.status);
     // this.subscriptions.unsubscribe();
-    alert('emitted');
+    console.log('emitted value:',this.state.status);
   }
 
 
