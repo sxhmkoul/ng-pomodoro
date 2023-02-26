@@ -16,46 +16,13 @@ workInterval: number = 2//25;
 seconds: number = 60;
 minute: number = 2//25;
 onScreenSeconds: any = 59;
-// workTimerSeconds$ = new Observable(observer => {
-//   setInterval(()=>{
-//     this.seconds--;
-//     this.workTimerStarted = true;
-//     if(this.seconds < 10 && this.seconds > 0){
-//       observer.next('0'+this.seconds);
-//     } else observer.next(this.seconds);
-
-//     if(this.seconds == 0){
-//       this.workTimerStarted = false;
-//       this.seconds = 60;
-//       if(this.workInterval > 0)
-//         this.workTimerMinute$.next(this.workInterval - 1);
-//       else {
-//         this.resetTimer();
-//         this.initBreakInterval();
-//         observer.complete();
-//       }
-//     }
-
-//   },1000);
-// });
-
-// workTimerMinute$ = new Subject<number>();
 
 constructor(state: StateManagementService){ }
 
 ngOnInit(): void {
-  // this.workTimerMinute$.subscribe((mins)=>{
-  //   this.workInterval = mins;
-  // })
 }
 
 startWorkTimer = () => {
-  // this.workTimerStarted = true;
-  // this.workTimerMinute$.next(this.workInterval - 1)
-  // this.workTimerSeconds$.subscribe((sec)=>{
-  //   this.onScreenSeconds = sec;
-  //   console.log(sec);
-  // })
   
 }
 
@@ -74,8 +41,6 @@ initBreakInterval = () => {
 
 checkExpiry = ($flag: boolean) => {
   this.expired = $flag;
-  
-  // console.log($flag);
 }
 
 }
