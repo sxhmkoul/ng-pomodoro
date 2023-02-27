@@ -2,7 +2,7 @@
     <div>{{message}}</div>
     <!-- <h3>testing {{workTimerMinute$ | async}} {{workTimerSeconds$ | async}}</h3> -->
     <h1>{{time}}:<span *ngIf="workTimerStarted">{{onScreenSeconds}}</span><span *ngIf="!workTimerStarted">{{zeroPlaceholder}}</span></h1>
-    <div class="w-100 d-flex border justify-content-center">
+    <div class="w-100 d-flex justify-content-center">
         <div class="w-25 d-flex justify-content-evenly">
             <button #start class="btn btn-success buttons" *ngIf="!state.dirtyPage" (click)="startWorkTimer();dirty()">Start</button>
             <button #start class="btn btn-success buttons" *ngIf="isPaused" (click)="resumeWorkTimer()">Resume</button>
