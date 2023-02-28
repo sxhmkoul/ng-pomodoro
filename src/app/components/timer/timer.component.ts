@@ -10,6 +10,8 @@ import { StateManagementService } from 'src/app/services/state-management.servic
 export class TimerComponent implements OnDestroy, AfterViewInit{
   @Input('time') time !: number;
   @Input('message') message !: string;
+  @ViewChild('workSound') workSound !: ElementRef;
+  @ViewChild('breakSound') breakSound !: ElementRef;
   @Output() isExpired = new EventEmitter<boolean>() ;
   @ViewChild('start') startBtn !: ElementRef;
   flagSwitch: boolean = false;
@@ -51,6 +53,10 @@ export class TimerComponent implements OnDestroy, AfterViewInit{
   }
   
   startWorkTimer = () => {
+    if(!this.state.status){
+      this.workSound.nativeElement.play();
+    }
+    
     this.workTimerStarted = true;
     this.workTimerSeconds$ = new Observable(observer => {
       this.id = setInterval(()=>{

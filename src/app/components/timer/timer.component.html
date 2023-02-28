@@ -5,8 +5,10 @@
     <div class="w-100 d-flex justify-content-center">
         <div class="w-25 d-flex justify-content-evenly">
             <button #start class="btn btn-success buttons" *ngIf="!state.dirtyPage" (click)="startWorkTimer();dirty()">Start</button>
-            <button #start class="btn btn-success buttons" *ngIf="isPaused" (click)="resumeWorkTimer()">Resume</button>
-            <button class="btn btn-secondary ml-3 buttons" *ngIf="!isPaused" (click)="pauseTimer()">Pause</button>
+            <button #start class="btn btn-success buttons" *ngIf="isPaused && !state.status" (click)="resumeWorkTimer()">Resume</button>
+            <button class="btn btn-secondary ml-3 buttons" *ngIf="!isPaused && !state.status" (click)="pauseTimer()">Pause</button>
         </div>
     </div>
 </div>
+<audio #workSound src="../assets/clearing_throat.mp3" autostart="false" width="0" height="0" id="work"
+enablejavascript="true"></audio>

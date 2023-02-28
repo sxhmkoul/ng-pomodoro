@@ -2,13 +2,26 @@
     height: 100vh;
     width: 100%;
     position: relative;
-    background: rgba(77,77,77,.5);
+    backdrop-filter: blur(8px);
 }
 
 .timer-body{
     width: 100%;
     display: flex;
     justify-content: center;
+    text-align: center;
     position: absolute;
     top: 30%;
+}
+
+.timer-core{
+    // background-color: white;
+    color: white;
+    padding: 10px;
+}
+
+.bg {
+    background: url('https://cdn.pixabay.com/photo/2018/11/11/09/30/nature-3808354_960_720.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
 }
